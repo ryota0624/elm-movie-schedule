@@ -1,0 +1,121 @@
+var _user$project$ScheduleView$tableRow = function (movie) {
+	return A2(
+		_elm_lang$html$Html$tr,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Events$onClick(
+				_user$project$ScheduleUpdate$ClickMovie(movie)),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$td,
+				{ctor: '[]'},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(movie.id),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$td,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(movie.title),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$td,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$img,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$src(
+										A2(_elm_lang$core$Basics_ops['++'], 'http://www.aeoncinema.com', movie.thumbnailUrl)),
+									_1: {ctor: '[]'}
+								},
+								{ctor: '[]'}),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+var _user$project$ScheduleView$tableBody = function (schedule) {
+	return A2(
+		_elm_lang$html$Html$tbody,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$List$map,
+			function (movie) {
+				return _user$project$ScheduleView$tableRow(movie);
+			},
+			schedule.movies));
+};
+var _user$project$ScheduleView$tableHead = A2(
+	_elm_lang$html$Html$thead,
+	{ctor: '[]'},
+	{
+		ctor: '::',
+		_0: A2(
+			_elm_lang$html$Html$tr,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$th,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text('id'),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$th,
+						{ctor: '[]'},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('titel'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$th,
+							{ctor: '[]'},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('poster'),
+								_1: {ctor: '[]'}
+							}),
+						_1: {ctor: '[]'}
+					}
+				}
+			}),
+		_1: {ctor: '[]'}
+	});
+var _user$project$ScheduleView$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$table,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: _user$project$ScheduleView$tableHead,
+			_1: {
+				ctor: '::',
+				_0: _user$project$ScheduleView$tableBody(model),
+				_1: {ctor: '[]'}
+			}
+		});
+};

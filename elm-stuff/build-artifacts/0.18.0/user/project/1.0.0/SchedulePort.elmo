@@ -1,0 +1,44 @@
+var _user$project$SchedulePort$schedule = _elm_lang$core$Native_Platform.incomingPort(
+	'schedule',
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (date) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (movies) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{date: date, movies: movies});
+				},
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'movies',
+					_elm_lang$core$Json_Decode$list(
+						A2(
+							_elm_lang$core$Json_Decode$andThen,
+							function (id) {
+								return A2(
+									_elm_lang$core$Json_Decode$andThen,
+									function (title) {
+										return A2(
+											_elm_lang$core$Json_Decode$andThen,
+											function (thumbnailUrl) {
+												return A2(
+													_elm_lang$core$Json_Decode$andThen,
+													function (detailUrl) {
+														return _elm_lang$core$Json_Decode$succeed(
+															{id: id, title: title, thumbnailUrl: thumbnailUrl, detailUrl: detailUrl});
+													},
+													A2(_elm_lang$core$Json_Decode$field, 'detailUrl', _elm_lang$core$Json_Decode$string));
+											},
+											A2(_elm_lang$core$Json_Decode$field, 'thumbnailUrl', _elm_lang$core$Json_Decode$string));
+									},
+									A2(_elm_lang$core$Json_Decode$field, 'title', _elm_lang$core$Json_Decode$string));
+							},
+							A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string)))));
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'date', _elm_lang$core$Json_Decode$string)));
+var _user$project$SchedulePort$onClickMovie = _elm_lang$core$Native_Platform.outgoingPort(
+	'onClickMovie',
+	function (v) {
+		return {id: v.id, title: v.title, thumbnailUrl: v.thumbnailUrl, detailUrl: v.detailUrl};
+	});

@@ -1,0 +1,50 @@
+var _user$project$ScheduleComponent$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _user$project$SchedulePort$schedule(_user$project$ScheduleUpdate$StoreSchedule),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$ScheduleComponent$init = function (model) {
+	return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+};
+var _user$project$ScheduleComponent$main = _elm_lang$html$Html$programWithFlags(
+	{init: _user$project$ScheduleComponent$init, view: _user$project$ScheduleView$view, update: _user$project$ScheduleUpdate$update, subscriptions: _user$project$ScheduleComponent$subscriptions})(
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (date) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (movies) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{date: date, movies: movies});
+				},
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'movies',
+					_elm_lang$core$Json_Decode$list(
+						A2(
+							_elm_lang$core$Json_Decode$andThen,
+							function (detailUrl) {
+								return A2(
+									_elm_lang$core$Json_Decode$andThen,
+									function (id) {
+										return A2(
+											_elm_lang$core$Json_Decode$andThen,
+											function (thumbnailUrl) {
+												return A2(
+													_elm_lang$core$Json_Decode$andThen,
+													function (title) {
+														return _elm_lang$core$Json_Decode$succeed(
+															{detailUrl: detailUrl, id: id, thumbnailUrl: thumbnailUrl, title: title});
+													},
+													A2(_elm_lang$core$Json_Decode$field, 'title', _elm_lang$core$Json_Decode$string));
+											},
+											A2(_elm_lang$core$Json_Decode$field, 'thumbnailUrl', _elm_lang$core$Json_Decode$string));
+									},
+									A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string));
+							},
+							A2(_elm_lang$core$Json_Decode$field, 'detailUrl', _elm_lang$core$Json_Decode$string)))));
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'date', _elm_lang$core$Json_Decode$string)));

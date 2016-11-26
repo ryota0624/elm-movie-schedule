@@ -1,0 +1,134 @@
+var _user$project$WorkerPort$init = function (model) {
+	return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+};
+var _user$project$WorkerPort$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		if (_p0.ctor === 'Store') {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						schedule: _elm_lang$core$Maybe$Just(_p0._0)
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$WorkerPort$storeFromPort = _elm_lang$core$Native_Platform.incomingPort(
+	'storeFromPort',
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (date) {
+			return A2(
+				_elm_lang$core$Json_Decode$andThen,
+				function (movies) {
+					return _elm_lang$core$Json_Decode$succeed(
+						{date: date, movies: movies});
+				},
+				A2(
+					_elm_lang$core$Json_Decode$field,
+					'movies',
+					_elm_lang$core$Json_Decode$list(
+						A2(
+							_elm_lang$core$Json_Decode$andThen,
+							function (id) {
+								return A2(
+									_elm_lang$core$Json_Decode$andThen,
+									function (title) {
+										return A2(
+											_elm_lang$core$Json_Decode$andThen,
+											function (thumbnailUrl) {
+												return A2(
+													_elm_lang$core$Json_Decode$andThen,
+													function (detailUrl) {
+														return _elm_lang$core$Json_Decode$succeed(
+															{id: id, title: title, thumbnailUrl: thumbnailUrl, detailUrl: detailUrl});
+													},
+													A2(_elm_lang$core$Json_Decode$field, 'detailUrl', _elm_lang$core$Json_Decode$string));
+											},
+											A2(_elm_lang$core$Json_Decode$field, 'thumbnailUrl', _elm_lang$core$Json_Decode$string));
+									},
+									A2(_elm_lang$core$Json_Decode$field, 'title', _elm_lang$core$Json_Decode$string));
+							},
+							A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string)))));
+		},
+		A2(_elm_lang$core$Json_Decode$field, 'date', _elm_lang$core$Json_Decode$string)));
+var _user$project$WorkerPort$Model = function (a) {
+	return {schedule: a};
+};
+var _user$project$WorkerPort$Store = function (a) {
+	return {ctor: 'Store', _0: a};
+};
+var _user$project$WorkerPort$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _user$project$WorkerPort$storeFromPort(_user$project$WorkerPort$Store),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$WorkerPort$main = _elm_lang$core$Platform$programWithFlags(
+	{init: _user$project$WorkerPort$init, update: _user$project$WorkerPort$update, subscriptions: _user$project$WorkerPort$subscriptions})(
+	A2(
+		_elm_lang$core$Json_Decode$andThen,
+		function (schedule) {
+			return _elm_lang$core$Json_Decode$succeed(
+				{schedule: schedule});
+		},
+		A2(
+			_elm_lang$core$Json_Decode$field,
+			'schedule',
+			_elm_lang$core$Json_Decode$oneOf(
+				{
+					ctor: '::',
+					_0: _elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$core$Json_Decode$map,
+							_elm_lang$core$Maybe$Just,
+							A2(
+								_elm_lang$core$Json_Decode$andThen,
+								function (date) {
+									return A2(
+										_elm_lang$core$Json_Decode$andThen,
+										function (movies) {
+											return _elm_lang$core$Json_Decode$succeed(
+												{date: date, movies: movies});
+										},
+										A2(
+											_elm_lang$core$Json_Decode$field,
+											'movies',
+											_elm_lang$core$Json_Decode$list(
+												A2(
+													_elm_lang$core$Json_Decode$andThen,
+													function (detailUrl) {
+														return A2(
+															_elm_lang$core$Json_Decode$andThen,
+															function (id) {
+																return A2(
+																	_elm_lang$core$Json_Decode$andThen,
+																	function (thumbnailUrl) {
+																		return A2(
+																			_elm_lang$core$Json_Decode$andThen,
+																			function (title) {
+																				return _elm_lang$core$Json_Decode$succeed(
+																					{detailUrl: detailUrl, id: id, thumbnailUrl: thumbnailUrl, title: title});
+																			},
+																			A2(_elm_lang$core$Json_Decode$field, 'title', _elm_lang$core$Json_Decode$string));
+																	},
+																	A2(_elm_lang$core$Json_Decode$field, 'thumbnailUrl', _elm_lang$core$Json_Decode$string));
+															},
+															A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string));
+													},
+													A2(_elm_lang$core$Json_Decode$field, 'detailUrl', _elm_lang$core$Json_Decode$string)))));
+								},
+								A2(_elm_lang$core$Json_Decode$field, 'date', _elm_lang$core$Json_Decode$string))),
+						_1: {ctor: '[]'}
+					}
+				}))));
+var _user$project$WorkerPort$Nill = {ctor: 'Nill'};

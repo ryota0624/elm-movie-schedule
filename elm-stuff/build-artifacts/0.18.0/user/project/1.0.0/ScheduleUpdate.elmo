@@ -1,0 +1,34 @@
+var _user$project$ScheduleUpdate$ClickMovie = function (a) {
+	return {ctor: 'ClickMovie', _0: a};
+};
+var _user$project$ScheduleUpdate$StoreSchedule = function (a) {
+	return {ctor: 'StoreSchedule', _0: a};
+};
+var _user$project$ScheduleUpdate$NoMsg = {ctor: 'NoMsg'};
+var _user$project$ScheduleUpdate$update = F2(
+	function (msg, model) {
+		var j = function () {
+			var _p0 = msg;
+			switch (_p0.ctor) {
+				case 'NoMsg':
+					return A2(_elm_lang$core$Debug$log, 'NoMsg', msg);
+				case 'ClickMovie':
+					return A2(_elm_lang$core$Debug$log, _p0._0.title, _user$project$ScheduleUpdate$NoMsg);
+				default:
+					return A2(_elm_lang$core$Debug$log, 'Some Message', _user$project$ScheduleUpdate$NoMsg);
+			}
+		}();
+		var _p1 = msg;
+		switch (_p1.ctor) {
+			case 'NoMsg':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'StoreSchedule':
+				return {ctor: '_Tuple2', _0: _p1._0, _1: _elm_lang$core$Platform_Cmd$none};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _user$project$SchedulePort$onClickMovie(_p1._0)
+				};
+		}
+	});
