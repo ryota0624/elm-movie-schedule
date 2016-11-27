@@ -25,8 +25,25 @@ var _user$project$SchedulePort$schedule = _elm_lang$core$Native_Platform.incomin
 												return A2(
 													_elm_lang$core$Json_Decode$andThen,
 													function (detailUrl) {
-														return _elm_lang$core$Json_Decode$succeed(
-															{id: id, title: title, thumbnailUrl: thumbnailUrl, detailUrl: detailUrl});
+														return A2(
+															_elm_lang$core$Json_Decode$andThen,
+															function (story) {
+																return _elm_lang$core$Json_Decode$succeed(
+																	{id: id, title: title, thumbnailUrl: thumbnailUrl, detailUrl: detailUrl, story: story});
+															},
+															A2(
+																_elm_lang$core$Json_Decode$field,
+																'story',
+																_elm_lang$core$Json_Decode$oneOf(
+																	{
+																		ctor: '::',
+																		_0: _elm_lang$core$Json_Decode$null(_elm_lang$core$Maybe$Nothing),
+																		_1: {
+																			ctor: '::',
+																			_0: A2(_elm_lang$core$Json_Decode$map, _elm_lang$core$Maybe$Just, _elm_lang$core$Json_Decode$string),
+																			_1: {ctor: '[]'}
+																		}
+																	})));
 													},
 													A2(_elm_lang$core$Json_Decode$field, 'detailUrl', _elm_lang$core$Json_Decode$string));
 											},
@@ -40,5 +57,16 @@ var _user$project$SchedulePort$schedule = _elm_lang$core$Native_Platform.incomin
 var _user$project$SchedulePort$onClickMovie = _elm_lang$core$Native_Platform.outgoingPort(
 	'onClickMovie',
 	function (v) {
-		return {id: v.id, title: v.title, thumbnailUrl: v.thumbnailUrl, detailUrl: v.detailUrl};
+		return {
+			id: v.id,
+			title: v.title,
+			thumbnailUrl: v.thumbnailUrl,
+			detailUrl: v.detailUrl,
+			story: (v.story.ctor === 'Nothing') ? null : v.story._0
+		};
+	});
+var _user$project$SchedulePort$onChangePreviewTime = _elm_lang$core$Native_Platform.outgoingPort(
+	'onChangePreviewTime',
+	function (v) {
+		return v;
 	});

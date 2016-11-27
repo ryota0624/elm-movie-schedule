@@ -1,24 +1,44 @@
-import {ReduceStore} from 'flux/utils';
-import dispatcher from '../dispatcher/dispatcher';
-import {ScheduleAction} from '../action/scheduleAction';
-import {Schedule} from '../model/Schedule';
-export class ScheduleStore extends ReduceStore {
-  getInitialState() {
-    return {
-      movies: [],
-      date: "date"
+import {ScheduleStore as ScheduleStoreWorker} from './ScheduleStore.elm';
+
+export const scheduleStoreWorker = ScheduleStoreWorker.worker({
+  schedule: {
+    date: "",
+    movies: []
+  }
+})
+
+export class ScheduleStore {
+  constructor(pushStatePort, dispatchers) {
+    this.port = pushStatePort;
+    this.dispatchers = dispatchers;
+    this.subscribers = [];
+    this.state = {
+      schedule: {
+        date: "",
+        movies: []
+      }
     }
+    this._subscribePort()
   }
 
-  reduce(state, action) {
-    console.log(action)
-    switch (action.type) {
-      case ScheduleAction.constants.store:
-        return new Schedule(action.schedule)
-      default:
-        return state
-    }
+  _subscribePort() {
+    this.port.subscribe(state => {
+      this.state = state;
+      this.subscribers.forEach(fun => fun())
+    });
+  }
+
+  on(fn) {
+    this.subscribers.push(fn);
+  }
+
+  rm(rmfn) {
+    this.subscribers = this.subscribers.filter(fn => fn !== rmfn)
+  }
+
+  getOne() {
+    return this.state.schedule
   }
 }
-
-export const scheduleStore = new ScheduleStore(dispatcher)
+const instance = new ScheduleStore(scheduleStoreWorker.ports.pushState, scheduleStoreWorker.ports);
+export default instance

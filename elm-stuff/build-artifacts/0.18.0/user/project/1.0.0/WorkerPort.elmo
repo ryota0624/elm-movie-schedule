@@ -1,23 +1,6 @@
-var _user$project$WorkerPort$init = function (model) {
-	return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+var _user$project$WorkerPort$init = function (state) {
+	return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
 };
-var _user$project$WorkerPort$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		if (_p0.ctor === 'Store') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Native_Utils.update(
-					model,
-					{
-						schedule: _elm_lang$core$Maybe$Just(_p0._0)
-					}),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-		}
-	});
 var _user$project$WorkerPort$storeFromPort = _elm_lang$core$Native_Platform.incomingPort(
 	'storeFromPort',
 	A2(
@@ -57,7 +40,38 @@ var _user$project$WorkerPort$storeFromPort = _elm_lang$core$Native_Platform.inco
 							A2(_elm_lang$core$Json_Decode$field, 'id', _elm_lang$core$Json_Decode$string)))));
 		},
 		A2(_elm_lang$core$Json_Decode$field, 'date', _elm_lang$core$Json_Decode$string)));
-var _user$project$WorkerPort$Model = function (a) {
+var _user$project$WorkerPort$pushState = _elm_lang$core$Native_Platform.outgoingPort(
+	'pushState',
+	function (v) {
+		return {
+			schedule: (v.schedule.ctor === 'Nothing') ? null : {
+				date: v.schedule._0.date,
+				movies: _elm_lang$core$Native_List.toArray(v.schedule._0.movies).map(
+					function (v) {
+						return {id: v.id, title: v.title, thumbnailUrl: v.thumbnailUrl, detailUrl: v.detailUrl};
+					})
+			}
+		};
+	});
+var _user$project$WorkerPort$update = F2(
+	function (msg, state) {
+		var _p0 = msg;
+		if (_p0.ctor === 'Store') {
+			var nextState = _elm_lang$core$Native_Utils.update(
+				state,
+				{
+					schedule: _elm_lang$core$Maybe$Just(_p0._0)
+				});
+			return {
+				ctor: '_Tuple2',
+				_0: nextState,
+				_1: _user$project$WorkerPort$pushState(nextState)
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$WorkerPort$State = function (a) {
 	return {schedule: a};
 };
 var _user$project$WorkerPort$Store = function (a) {
@@ -131,4 +145,4 @@ var _user$project$WorkerPort$main = _elm_lang$core$Platform$programWithFlags(
 						_1: {ctor: '[]'}
 					}
 				}))));
-var _user$project$WorkerPort$Nill = {ctor: 'Nill'};
+var _user$project$WorkerPort$Nil = {ctor: 'Nil'};

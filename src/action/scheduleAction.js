@@ -1,25 +1,20 @@
-import dispatcher from '../dispatcher/dispatcher'
-
+import ScheduleStore from '../store/ScheduleStore';
+import ScheduleGateway from '../gateway/ScheduleGateway';
+import {Schedule} from '../model/Schedule';
 export class ScheduleAction {
-  constructor(dispatcher) {
-    this.dispatcher = dispatcher
+  constructor(scheduleStore, scheduleAdaptor) {
+    this.scheduleStore = scheduleStore;
+    this.scheduleAdaptor = scheduleAdaptor;
+  }
+  getOne() {
+    this.scheduleAdaptor.getOne()
+    .then(schedule => this.scheduleStore.dispatchers.storeFromPort.send(schedule))
   }
 
-  static constants = {
-    store: "scheduleActionStore"
-  }
-
-  get() {
-    fetch("/schedule")
-    .then(response => response.json())
-    .then(json => {
-      this.dispatcher.dispatch({
-        type: ScheduleAction.constants.store,
-        schedule: json
-      })
-    })
+  getByTime(time) {
+    this.scheduleAdaptor.getByTime(time)
+    .then(schedule => this.scheduleStore.dispatchers.storeFromPort.send(schedule))
   }
 }
-
-const instance = new ScheduleAction(dispatcher);
+const instance = new ScheduleAction(ScheduleStore, ScheduleGateway);
 export default instance

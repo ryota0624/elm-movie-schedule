@@ -1,14 +1,16 @@
+import {MovieVO} from './Movie'
 export class Schedule {
   constructor(props) {
     this.date = props.date
     this.movies = props.movies.map(movieJSON => {
       const {id, title, thumbnail_url, detail_url} = movieJSON;
-      return {
+      return MovieVO.create({
         id,
         title,
-        thumbnailUrl: thumbnail_url,
-        detailUrl: detail_url
-      }
+        thumbnail_url,
+        detail_url,
+        story: ""
+      })
     })
   }
 }

@@ -1,0 +1,4 @@
+var _user$project$Schedule$Schedule = F2(
+	function (a, b) {
+		return {date: a, movies: b};
+	});

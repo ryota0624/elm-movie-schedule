@@ -1,0 +1,17 @@
+var _user$project$MovieUpdate$update = F2(
+	function (msg, state) {
+		var _p0 = msg;
+		if (_p0.ctor === 'StoreMovie') {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Maybe$Just(_p0._0),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
+		}
+	});
+var _user$project$MovieUpdate$StoreMovie = function (a) {
+	return {ctor: 'StoreMovie', _0: a};
+};
+var _user$project$MovieUpdate$NoMsg = {ctor: 'NoMsg'};

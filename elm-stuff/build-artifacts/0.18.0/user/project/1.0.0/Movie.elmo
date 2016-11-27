@@ -1,0 +1,4 @@
+var _user$project$Movie$Movie = F5(
+	function (a, b, c, d, e) {
+		return {id: a, title: b, thumbnailUrl: c, detailUrl: d, story: e};
+	});

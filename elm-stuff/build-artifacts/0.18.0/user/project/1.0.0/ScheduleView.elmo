@@ -1,3 +1,53 @@
+var _user$project$ScheduleView$dateView = function (date) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Events$onClick(
+						_user$project$ScheduleUpdate$ClickPrevDate(date)),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('<'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html$text(
+							_rluiten$elm_date_extra$Date_Extra_Format$utcIsoString(date)),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Events$onClick(
+								_user$project$ScheduleUpdate$ClickNextDate(date)),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('>'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
 var _user$project$ScheduleView$tableRow = function (movie) {
 	return A2(
 		_elm_lang$html$Html$tr,
@@ -105,17 +155,58 @@ var _user$project$ScheduleView$tableHead = A2(
 			}),
 		_1: {ctor: '[]'}
 	});
-var _user$project$ScheduleView$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$table,
-		{ctor: '[]'},
-		{
-			ctor: '::',
-			_0: _user$project$ScheduleView$tableHead,
-			_1: {
+var _user$project$ScheduleView$scheduleView = function (model) {
+	var _p0 = model.movies;
+	if (_p0.ctor === '[]') {
+		return A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{
 				ctor: '::',
-				_0: _user$project$ScheduleView$tableBody(model),
+				_0: _elm_lang$html$Html$text('loading'),
 				_1: {ctor: '[]'}
-			}
-		});
+			});
+	} else {
+		return A2(
+			_elm_lang$html$Html$table,
+			{ctor: '[]'},
+			{
+				ctor: '::',
+				_0: _user$project$ScheduleView$tableHead,
+				_1: {
+					ctor: '::',
+					_0: _user$project$ScheduleView$tableBody(model),
+					_1: {ctor: '[]'}
+				}
+			});
+	}
+};
+var _user$project$ScheduleView$view = function (state) {
+	var viewChildren = function () {
+		var _p1 = state.currentDate;
+		if (_p1.ctor === 'Just') {
+			return {
+				ctor: '::',
+				_0: _user$project$ScheduleView$dateView(_p1._0),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$br,
+						{ctor: '[]'},
+						{ctor: '[]'}),
+					_1: {
+						ctor: '::',
+						_0: _user$project$ScheduleView$scheduleView(state.schedule),
+						_1: {ctor: '[]'}
+					}
+				}
+			};
+		} else {
+			return {ctor: '[]'};
+		}
+	}();
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		viewChildren);
 };
