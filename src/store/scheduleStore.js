@@ -22,6 +22,7 @@ export class ScheduleStore {
   }
 
   _subscribePort() {
+    this.subscribers.filter(a => a);
     this.port.subscribe(state => {
       this.state = state;
       this.subscribers.forEach(fun => fun())

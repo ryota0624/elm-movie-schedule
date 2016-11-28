@@ -16,6 +16,7 @@ export class MovieStore {
   }
 
   _subscribePort() {
+    this.subscribers.filter(a => a);
     this.port.subscribe(state => {
       this.state = state;
       this.subscribers.forEach(fun => fun())
@@ -31,7 +32,7 @@ export class MovieStore {
   }
 
   findById(id) {
-    return this.state.movies.filter(movie => movie.id === id)[0]
+    return this.state.movies.filter(movie => movie.id === id)[0] || null
   }
 }
 const instance = new MovieStore(movieStoreWorker.ports.pushState, movieStoreWorker.ports);

@@ -100,7 +100,7 @@ var _user$project$ScheduleView$tableRow = function (movie) {
 			}
 		});
 };
-var _user$project$ScheduleView$tableBody = function (schedule) {
+var _user$project$ScheduleView$tableBody = function (list) {
 	return A2(
 		_elm_lang$html$Html$tbody,
 		{ctor: '[]'},
@@ -109,7 +109,7 @@ var _user$project$ScheduleView$tableBody = function (schedule) {
 			function (movie) {
 				return _user$project$ScheduleView$tableRow(movie);
 			},
-			schedule.movies));
+			list));
 };
 var _user$project$ScheduleView$tableHead = A2(
 	_elm_lang$html$Html$thead,
@@ -175,7 +175,7 @@ var _user$project$ScheduleView$scheduleView = function (model) {
 				_0: _user$project$ScheduleView$tableHead,
 				_1: {
 					ctor: '::',
-					_0: _user$project$ScheduleView$tableBody(model),
+					_0: _user$project$ScheduleView$tableBody(model.movies),
 					_1: {ctor: '[]'}
 				}
 			});

@@ -1,0 +1,4 @@
+var _user$project$MovieComponentState$State = F2(
+	function (a, b) {
+		return {movie: a, review: b};
+	});

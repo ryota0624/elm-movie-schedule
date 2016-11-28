@@ -1,16 +1,55 @@
 var _user$project$MovieUpdate$update = F2(
 	function (msg, state) {
 		var _p0 = msg;
-		if (_p0.ctor === 'StoreMovie') {
-			return {
-				ctor: '_Tuple2',
-				_0: _elm_lang$core$Maybe$Just(_p0._0),
-				_1: _elm_lang$core$Platform_Cmd$none
-			};
-		} else {
-			return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
+		switch (_p0.ctor) {
+			case 'StoreMovie':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						state,
+						{
+							movie: _elm_lang$core$Maybe$Just(_p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'StoreState':
+				return {ctor: '_Tuple2', _0: _p0._0, _1: _elm_lang$core$Platform_Cmd$none};
+			case 'ClickBackButton':
+				return {
+					ctor: '_Tuple2',
+					_0: state,
+					_1: _user$project$MoviePort$onClickBackButton(
+						{ctor: '_Tuple0'})
+				};
+			case 'ClickPointButton':
+				return {
+					ctor: '_Tuple2',
+					_0: state,
+					_1: A2(
+						_elm_lang$core$Maybe$withDefault,
+						_elm_lang$core$Platform_Cmd$none,
+						A2(
+							_elm_lang$core$Maybe$map,
+							function (movie) {
+								return _user$project$MoviePort$onClickPointButton(
+									A2(_user$project$Review$create, movie.id, _p0._0));
+							},
+							state.movie))
+				};
+			default:
+				return {ctor: '_Tuple2', _0: state, _1: _elm_lang$core$Platform_Cmd$none};
 		}
 	});
+var _user$project$MovieUpdate$StoreState = function (a) {
+	return {ctor: 'StoreState', _0: a};
+};
+var _user$project$MovieUpdate$StoreReview = function (a) {
+	return {ctor: 'StoreReview', _0: a};
+};
+var _user$project$MovieUpdate$ClickPointButton = function (a) {
+	return {ctor: 'ClickPointButton', _0: a};
+};
+var _user$project$MovieUpdate$ClickBackButton = {ctor: 'ClickBackButton'};
 var _user$project$MovieUpdate$StoreMovie = function (a) {
 	return {ctor: 'StoreMovie', _0: a};
 };
