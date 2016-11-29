@@ -1,5 +1,7 @@
 import {MovieVO} from './Movie'
 export class Schedule {
+  date: number
+  movies: MovieVO[]
   constructor(props) {
     this.date = props.date
     this.movies = props.movies.map(movieJSON => {

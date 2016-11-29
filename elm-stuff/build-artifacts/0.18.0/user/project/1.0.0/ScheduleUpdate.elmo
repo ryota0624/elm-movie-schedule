@@ -20,7 +20,9 @@ var _user$project$ScheduleUpdate$update = F2(
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						state,
-						{schedule: _p0._0}),
+						{
+							schedule: _elm_lang$core$Maybe$Just(_p0._0)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'ClickMovie':

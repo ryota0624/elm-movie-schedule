@@ -13,6 +13,7 @@ type Msg
     | ClickPointButton Int
     | StoreReview Review
     | StoreState State
+    | RemoveReview Review
 
 
 update : Msg -> State -> ( State, Cmd Msg )
@@ -29,6 +30,9 @@ update msg state =
 
         ClickPointButton point ->
             ( state, Maybe.map (\movie -> onClickPointButton <| (Review.create movie.id point)) (state.movie) |> Maybe.withDefault Cmd.none )
+
+        RemoveReview review ->
+            ( state, onClickRemoveReviewButton review )
 
         _ ->
             ( state, Cmd.none )

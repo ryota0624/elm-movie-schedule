@@ -48,6 +48,13 @@ var _user$project$ScheduleView$dateView = function (date) {
 			}
 		});
 };
+var _user$project$ScheduleView$tableBody = F2(
+	function (list, modelToView) {
+		return A2(
+			_elm_lang$html$Html$tbody,
+			{ctor: '[]'},
+			A2(_elm_lang$core$List$map, modelToView, list));
+	});
 var _user$project$ScheduleView$tableRow = function (movie) {
 	return A2(
 		_elm_lang$html$Html$tr,
@@ -100,61 +107,31 @@ var _user$project$ScheduleView$tableRow = function (movie) {
 			}
 		});
 };
-var _user$project$ScheduleView$tableBody = function (list) {
+var _user$project$ScheduleView$tableHeadFromList = function (list) {
 	return A2(
-		_elm_lang$html$Html$tbody,
+		_elm_lang$html$Html$thead,
 		{ctor: '[]'},
-		A2(
-			_elm_lang$core$List$map,
-			function (movie) {
-				return _user$project$ScheduleView$tableRow(movie);
-			},
-			list));
-};
-var _user$project$ScheduleView$tableHead = A2(
-	_elm_lang$html$Html$thead,
-	{ctor: '[]'},
-	{
-		ctor: '::',
-		_0: A2(
-			_elm_lang$html$Html$tr,
-			{ctor: '[]'},
-			{
-				ctor: '::',
-				_0: A2(
-					_elm_lang$html$Html$th,
-					{ctor: '[]'},
-					{
-						ctor: '::',
-						_0: _elm_lang$html$Html$text('id'),
-						_1: {ctor: '[]'}
-					}),
-				_1: {
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$th,
-						{ctor: '[]'},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('titel'),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$tr,
+				{ctor: '[]'},
+				A2(
+					_elm_lang$core$List$map,
+					function (str) {
+						return A2(
 							_elm_lang$html$Html$th,
 							{ctor: '[]'},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('poster'),
+								_0: _elm_lang$html$Html$text(str),
 								_1: {ctor: '[]'}
-							}),
-						_1: {ctor: '[]'}
-					}
-				}
-			}),
-		_1: {ctor: '[]'}
-	});
+							});
+					},
+					list)),
+			_1: {ctor: '[]'}
+		});
+};
 var _user$project$ScheduleView$scheduleView = function (model) {
 	var _p0 = model.movies;
 	if (_p0.ctor === '[]') {
@@ -172,39 +149,64 @@ var _user$project$ScheduleView$scheduleView = function (model) {
 			{ctor: '[]'},
 			{
 				ctor: '::',
-				_0: _user$project$ScheduleView$tableHead,
+				_0: _user$project$ScheduleView$tableHeadFromList(
+					{
+						ctor: '::',
+						_0: 'id',
+						_1: {
+							ctor: '::',
+							_0: 'title',
+							_1: {
+								ctor: '::',
+								_0: 'poster',
+								_1: {ctor: '[]'}
+							}
+						}
+					}),
 				_1: {
 					ctor: '::',
-					_0: _user$project$ScheduleView$tableBody(model.movies),
+					_0: A2(_user$project$ScheduleView$tableBody, model.movies, _user$project$ScheduleView$tableRow),
 					_1: {ctor: '[]'}
 				}
 			});
 	}
 };
 var _user$project$ScheduleView$view = function (state) {
-	var viewChildren = function () {
-		var _p1 = state.currentDate;
-		if (_p1.ctor === 'Just') {
-			return {
+	var currentScheduleView = A2(
+		_elm_lang$core$Maybe$withDefault,
+		A2(
+			_elm_lang$html$Html$div,
+			{ctor: '[]'},
+			{
 				ctor: '::',
-				_0: _user$project$ScheduleView$dateView(_p1._0),
-				_1: {
+				_0: _elm_lang$html$Html$text('loading...'),
+				_1: {ctor: '[]'}
+			}),
+		A2(_elm_lang$core$Maybe$map, _user$project$ScheduleView$scheduleView, state.schedule));
+	var viewChildren = A2(
+		_elm_lang$core$Maybe$withDefault,
+		{ctor: '[]'},
+		A2(
+			_elm_lang$core$Maybe$map,
+			function (date) {
+				return {
 					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$br,
-						{ctor: '[]'},
-						{ctor: '[]'}),
+					_0: _user$project$ScheduleView$dateView(date),
 					_1: {
 						ctor: '::',
-						_0: _user$project$ScheduleView$scheduleView(state.schedule),
-						_1: {ctor: '[]'}
+						_0: A2(
+							_elm_lang$html$Html$br,
+							{ctor: '[]'},
+							{ctor: '[]'}),
+						_1: {
+							ctor: '::',
+							_0: currentScheduleView,
+							_1: {ctor: '[]'}
+						}
 					}
-				}
-			};
-		} else {
-			return {ctor: '[]'};
-		}
-	}();
+				};
+			},
+			state.currentDate));
 	return A2(
 		_elm_lang$html$Html$div,
 		{ctor: '[]'},

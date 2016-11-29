@@ -1,6 +1,6 @@
 module MovieView exposing (view)
 
-import MovieUpdate exposing (update, Msg(ClickBackButton, ClickPointButton))
+import MovieUpdate exposing (update, Msg(..))
 import Html exposing (Html, text, div, br, button)
 import Html.Events exposing (onClick)
 import Movie exposing (Movie)
@@ -34,7 +34,7 @@ movieView { title, story } =
 
 reviewView : Review -> Html Msg
 reviewView review =
-    div [] [ text <| toString review.point ]
+    div [] [ text <| toString review.point, button [ onClick <| RemoveReview <| review ] [] ]
 
 
 fivePointView : Html Msg

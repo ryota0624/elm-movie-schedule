@@ -18,3 +18,6 @@ port onClickBackButton : () -> Cmd back
 
 
 port onClickPointButton : Review -> Cmd point
+
+
+port onClickRemoveReviewButton : Review -> Cmd review

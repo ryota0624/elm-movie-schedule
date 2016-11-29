@@ -9,6 +9,11 @@ export class Movie {
     this.detailUrl = detail_url || "";
     this.story = story
   }
+  id: string
+  title: string
+  thumbnailUrl: string
+  detailUrl: string
+  story: string
 
   static create(props) {
     const movieVo = MovieVOCache.get(props.id);
@@ -30,6 +35,11 @@ export class MovieVO {
     this.detailUrl = detail_url;
     this.story = story
   }
+  id: string
+  title: string
+  thumbnailUrl: string
+  detailUrl: string
+  story: string
 
   static getByCache(id) {
     return MovieVOCache.get(id)

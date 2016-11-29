@@ -1,7 +1,9 @@
 import Dexie from 'dexie';
-import {Review} from '../model/Review';
+import { Review } from '../model/Review';
+import { ReviewAdaptor } from '../adaptor/ReviewAdaptor';
 
-export class ReviewGateway extends Dexie {
+export class ReviewGateway extends Dexie implements ReviewAdaptor {
+  reviews: Dexie.Table<Review, string>
   constructor(version) {
     super('Review');
     this.version(version).stores({
@@ -9,8 +11,12 @@ export class ReviewGateway extends Dexie {
     });
   }
 
-  store(review) {
-    return this.reviews.add(review);
+  remove(id: string) {
+    return this.reviews.delete(id) as any
+  }
+
+  store(review: Review): Promise<void> {
+    return this.reviews.add(review) as any
   }
 
   findById(id) {

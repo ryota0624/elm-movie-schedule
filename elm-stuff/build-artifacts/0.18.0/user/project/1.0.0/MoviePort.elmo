@@ -156,3 +156,8 @@ var _user$project$MoviePort$onClickPointButton = _elm_lang$core$Native_Platform.
 	function (v) {
 		return {id: v.id, point: v.point};
 	});
+var _user$project$MoviePort$onClickRemoveReviewButton = _elm_lang$core$Native_Platform.outgoingPort(
+	'onClickRemoveReviewButton',
+	function (v) {
+		return {id: v.id, point: v.point};
+	});

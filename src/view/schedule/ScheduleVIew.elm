@@ -11,15 +11,10 @@ import Date
 import Date.Extra.Format as Format exposing (format, formatUtc, utcIsoString)
 
 
-tableHead : Html Msg
-tableHead =
+tableHeadFromList : List String -> Html Msg
+tableHeadFromList list =
     thead []
-        [ tr []
-            [ th [] [ text "id" ]
-            , th [] [ text "titel" ]
-            , th [] [ text "poster" ]
-            ]
-        ]
+        [ tr [] (List.map (\str -> th [] [ text str ]) list) ]
 
 
 tableRow : Movie -> Html Msg
@@ -31,9 +26,9 @@ tableRow movie =
         ]
 
 
-tableBody : List Movie -> Html Msg
-tableBody list =
-    tbody [] (List.map (\movie -> tableRow (movie)) list)
+tableBody : List model -> (model -> Html Msg) -> Html Msg
+tableBody list modelToView =
+    tbody [] (List.map modelToView list)
 
 
 scheduleView : Schedule -> Html Msg
@@ -43,7 +38,10 @@ scheduleView model =
             div [] [ text "loading" ]
 
         _ ->
-            table [] [ tableHead, tableBody model.movies ]
+            table []
+                [ tableHeadFromList [ "id", "title", "poster" ]
+                , tableBody model.movies tableRow
+                ]
 
 
 dateView : Date.Date -> Html Msg
@@ -58,12 +56,10 @@ dateView date =
 view : State -> Html Msg
 view state =
     let
-        viewChildren =
-            case state.currentDate of
-                Maybe.Just date ->
-                    [ dateView date, br [] [], scheduleView state.schedule ]
+        currentScheduleView =
+            Maybe.withDefault (div [] [ text "loading..." ]) (Maybe.map scheduleView state.schedule)
 
-                Maybe.Nothing ->
-                    []
+        viewChildren =
+            Maybe.withDefault [] (Maybe.map (\date -> [ dateView date, br [] [], currentScheduleView ]) state.currentDate)
     in
         div [] viewChildren

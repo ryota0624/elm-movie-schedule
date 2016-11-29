@@ -1,9 +1,10 @@
-import {Schedule} from '../model/Schedule';
+import { Schedule } from '../model/Schedule';
+import { SchduleAdaptor } from '../adaptor/ScheduleAdaptor';
 const cache = new Map();
 
-export class ScheduleGateway {
+export class ScheduleGateway implements SchduleAdaptor {
   getOne() {
-    return fetch("/schedule")
+    return (window as any).fetch("/schedule")
     .then(response => response.json())
     .then(json => new Schedule(json)).then(schedule => {
       cache.set(schedule.date, schedule);
@@ -12,7 +13,7 @@ export class ScheduleGateway {
   }
 
   getByTime(time) {
-    return fetch("/schedule/" + Math.floor(time / 1000))
+    return (window as any).fetch("/schedule/" + Math.floor(time / 1000))
     .then(response => response.json())
     .then(json => new Schedule(json))    
     .then(json => new Schedule(json)).then(schedule => {
