@@ -1,4 +1,0 @@
-var _user$project$Model$Movie = F4(
-	function (a, b, c, d) {
-		return {id: a, title: b, thumbnailUrl: c, detailUrl: d};
-	});

@@ -1,8 +1,0 @@
-var _user$project$Review$create = F2(
-	function (id, point) {
-		return {id: id, point: point};
-	});
-var _user$project$Review$Review = F2(
-	function (a, b) {
-		return {id: a, point: b};
-	});

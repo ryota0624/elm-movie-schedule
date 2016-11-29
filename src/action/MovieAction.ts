@@ -1,7 +1,7 @@
 import MovieStore from '../store/MovieStore';
 import {Movie} from '../model/Movie';
 import dispather, { AppDispather } from '../flux/dispatcher';
-import { StoreMovieType } from '../flux/MoviePayload';
+import { StoreMovieType, StoreMoviesType } from '../flux/MoviePayload';
 
 import MovieGateway from '../gateway/MovieGateway';
 import { MovieAdaptor } from '../adaptor/MovieAdaptor';
@@ -14,10 +14,19 @@ export class MovieAction {
 
   findById(id) {
     this.movieGateway.findById(id)
-    .then((movie: Movie) => this.dispather.dispatch({
+      .then((movie: Movie) => this.dispather.dispatch({
         type: StoreMovieType,
         movie
-    }))
+      }));
+  }
+
+  findByIds(ids: string[]) {
+    this.movieGateway.findByIds(ids).then(movies => {
+      this.dispather.dispatch({
+        type: StoreMoviesType,
+        movies
+      })
+    });
   }
 }
 const instance = new MovieAction(dispather, MovieGateway);

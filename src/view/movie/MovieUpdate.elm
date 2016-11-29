@@ -9,9 +9,9 @@ import MovieComponentState exposing (State)
 type Msg
     = NoMsg
     | StoreMovie Movie
+    | StoreReview Review
     | ClickBackButton
     | ClickPointButton Int
-    | StoreReview Review
     | StoreState State
     | RemoveReview Review
 
@@ -21,6 +21,9 @@ update msg state =
     case msg of
         StoreMovie movie ->
             ( { state | movie = Maybe.Just movie }, Cmd.none )
+
+        StoreReview review ->
+            ( { state | review = Maybe.Just review }, Cmd.none )
 
         StoreState state ->
             ( state, Cmd.none )

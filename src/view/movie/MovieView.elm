@@ -32,9 +32,14 @@ movieView { title, story } =
         ]
 
 
+makeStar : Int -> Html Msg
+makeStar starNum =
+    div [] (List.repeat starNum (text "☆"))
+
+
 reviewView : Review -> Html Msg
 reviewView review =
-    div [] [ text <| toString review.point, button [ onClick <| RemoveReview <| review ] [] ]
+    div [] [ makeStar <| review.point, button [ onClick <| RemoveReview <| review ] [ text "reset review" ] ]
 
 
 fivePointView : Html Msg

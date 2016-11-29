@@ -6,9 +6,10 @@
     "source-directories": [
         ".",
         "./src/view/schedule",
-        "./src/store",
         "./src/model",
-        "./src/view/movie"
+        "./src/view/movie",
+        "./src/view/reviews"
+
     ],
     "exposed-modules": [],
     "dependencies": {

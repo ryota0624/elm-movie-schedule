@@ -1,8 +1,0 @@
-var _user$project$ScheduleModel$Movie = F4(
-	function (a, b, c, d) {
-		return {id: a, title: b, thumbnailUrl: c, detailUrl: d};
-	});
-var _user$project$ScheduleModel$Schedule = F2(
-	function (a, b) {
-		return {date: a, movies: b};
-	});

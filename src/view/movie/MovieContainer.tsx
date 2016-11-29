@@ -1,4 +1,4 @@
-import { Component, PropTypes } from 'react';
+import { PureComponent, PropTypes } from 'react';
 import * as React from 'react';
 import MovieStore from '../../store/MovieStore';
 import ReviewStore from '../../store/ReviewStore';
@@ -22,7 +22,7 @@ type MovieViewContainerState = {
   review?: Review
 }
 
-export default class MovieViewContainer extends Component<MovieViewContainerProps, MovieViewContainerState> {
+export default class MovieViewContainer extends PureComponent<MovieViewContainerProps, {}> {
   static contextTypes = {
     router: PropTypes.object.isRequired
   }
@@ -31,27 +31,23 @@ export default class MovieViewContainer extends Component<MovieViewContainerProp
   context: { router: any }
   constructor(props, context) {
     super(props, context)
-    this.state = {
-      movie: MovieStore.findById(this.props.params.id),
-      review: ReviewStore.findById(this.props.params.id)
-    }
     this.reviewMovie = this.reviewMovie.bind(this);
     this.backToScheduleView = this.backToScheduleView.bind(this);
-    this.setReview = this.setReview.bind(this);
+    // this.setReview = this.setReview.bind(this);
+    // this.setMovie = this.setMovie.bind(this);
     this.removeReview = this.removeReview.bind(this);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    this.MovieView.ports.state.send(this.state);
+    this.setStateToElm = this.setStateToElm.bind(this);
   }
 
   componentDidMount() {
-    this.setMovie = this.setMovie.bind(this);
-    this.MovieView = MovieComponent.embed(this.span, this.state);
+    this.MovieView = MovieComponent.embed(this.span, {
+      movie: MovieStore.findById(this.props.params.id),
+      review: ReviewStore.findById(this.props.params.id)
+    });
     MovieAction.findById(this.props.params.id);
 
-    MovieStore.addChangeListener(this.setMovie);
-    ReviewStore.addChangeListener(this.setReview);
+    MovieStore.addChangeListener(this.setStateToElm);
+    ReviewStore.addChangeListener(this.setStateToElm);
 
     this.MovieView.ports.onClickBackButton.subscribe(this.backToScheduleView);
     this.MovieView.ports.onClickPointButton.subscribe(this.reviewMovie);
@@ -59,8 +55,8 @@ export default class MovieViewContainer extends Component<MovieViewContainerProp
   }
 
   componentWillUnmount() {
-    MovieStore.removeChangeListener(this.setMovie);
-    ReviewStore.removeChangeListener(this.setReview);
+    MovieStore.removeChangeListener(this.setStateToElm);
+    ReviewStore.removeChangeListener(this.setStateToElm);
     this.MovieView.ports.onClickBackButton.unsubscribe(this.backToScheduleView);
     this.MovieView.ports.onClickPointButton.unsubscribe(this.reviewMovie);
     this.MovieView.ports.onClickRemoveReviewButton.unsubscribe(this.removeReview);
@@ -70,7 +66,7 @@ export default class MovieViewContainer extends Component<MovieViewContainerProp
   render() {
    return (
     <span ref={(span) => {
-        this.span = span
+       this.span = span;
       }}>
       </span>
    )
@@ -88,15 +84,9 @@ export default class MovieViewContainer extends Component<MovieViewContainerProp
     this.context.router.transitionTo(`/schedule`);
   }
 
-  setMovie() {
-    this.setState({
-      movie: MovieStore.findById(this.props.params.id)
-    });
-  }
-
-  setReview() {
+  setStateToElm() {
     const review = ReviewStore.findById(this.props.params.id);
-    this.setState({ review });
+    const movie = MovieStore.findById(this.props.params.id);
+    this.MovieView.ports.state.send({ review, movie });
   }
-
 }

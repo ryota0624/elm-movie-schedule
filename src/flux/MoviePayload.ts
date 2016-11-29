@@ -7,4 +7,11 @@ export type StoreMovie = {
   movie: Movie
 }
 
-export type MoviePayload = StoreMovie;
+export type StoreMoviesType = 'StoreMoviesType';
+export const StoreMoviesType = 'StoreMoviesType';
+export type StoreMovies = {
+  type: StoreMoviesType
+  movies: Movie[]
+}
+
+export type MoviePayload = StoreMovie | StoreMovies;

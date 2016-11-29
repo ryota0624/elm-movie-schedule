@@ -34,8 +34,12 @@ export class ReviewStore extends BaseStore<ReviewPayload> {
     this.state = this.state.concat(reviews);
   }
 
-  findById(id) {
+  findById(id: string): Review {
     return this.state.filter(review => review.id === id)[0] || null
+  }
+
+  findAll(): Review[] {
+    return [].concat(this.state)
   }
 }
 const instance = new ReviewStore(dispatcher);
