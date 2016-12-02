@@ -5,6 +5,7 @@ import ReviewsUpdate exposing (update, Msg(..))
 import Movie exposing (Movie)
 import Review exposing (Review)
 import Html exposing (..)
+import Html.Events exposing (onClick)
 
 
 movies : List ( Movie, Review ) -> Html Msg
@@ -13,7 +14,7 @@ movies list =
         (List.map
             (\( movie, review ) ->
                 div []
-                    [ text movie.title
+                    [ span [ onClick <| OnClickMovieTitle <| movie ] [ text movie.title ]
                     , text "->"
                     , text <| toString <| review.point
                     ]

@@ -33,8 +33,6 @@ export default class MovieViewContainer extends PureComponent<MovieViewContainer
     super(props, context)
     this.reviewMovie = this.reviewMovie.bind(this);
     this.backToScheduleView = this.backToScheduleView.bind(this);
-    // this.setReview = this.setReview.bind(this);
-    // this.setMovie = this.setMovie.bind(this);
     this.removeReview = this.removeReview.bind(this);
     this.setStateToElm = this.setStateToElm.bind(this);
   }

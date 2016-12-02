@@ -3,6 +3,7 @@ module ReviewsUpdate exposing (Msg(..), update)
 import ReviewsState exposing (State)
 import Movie exposing (Movie)
 import Review exposing (Review)
+import ReviewsPort exposing (onClickMovieTitle)
 
 
 type alias Movies =
@@ -17,6 +18,7 @@ type Msg
     = NoMsg
     | StoreMovies Movies
     | StoreReviews Reviews
+    | OnClickMovieTitle Movie
 
 
 update : Msg -> State -> ( State, Cmd Msg )
@@ -30,3 +32,6 @@ update msg state =
 
         StoreReviews reviews ->
             ( { state | reviews = reviews }, Cmd.none )
+
+        OnClickMovieTitle movie ->
+            ( state, onClickMovieTitle movie )

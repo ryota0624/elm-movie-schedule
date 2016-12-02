@@ -4,16 +4,17 @@ import MoviePort exposing (..)
 import Movie exposing (Movie)
 import Review exposing (Review)
 import MovieComponentState exposing (State)
+import ModalComponent exposing (..)
 
 
 type Msg
-    = NoMsg
-    | StoreMovie Movie
+    = StoreMovie Movie
     | StoreReview Review
     | ClickBackButton
     | ClickPointButton Int
     | StoreState State
     | RemoveReview Review
+    | SubMessage ModalMessage
 
 
 update : Msg -> State -> ( State, Cmd Msg )
@@ -37,5 +38,5 @@ update msg state =
         RemoveReview review ->
             ( state, onClickRemoveReviewButton review )
 
-        _ ->
-            ( state, Cmd.none )
+        SubMessage subMsg ->
+            ( { state | modal = modalUpdate (subMsg) (state.modal) }, Cmd.none )

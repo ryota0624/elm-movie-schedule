@@ -6,11 +6,17 @@ import MovieUpdate exposing (Msg(..), update)
 import MovieComponentState exposing (State)
 import MovieView exposing (view)
 import MoviePort exposing (..)
+import Review exposing (..)
+import ModalComponent exposing (..)
 
 
-init : State -> ( State, Cmd Msg )
-init state =
-    ( state, Cmd.none )
+init :
+    { movie : Maybe Movie
+    , review : Maybe Review
+    }
+    -> ( State, Cmd Msg )
+init { movie, review } =
+    ( { movie = movie, review = review, modal = initModel }, Cmd.none )
 
 
 subscriptions : State -> Sub Msg

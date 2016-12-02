@@ -8,8 +8,8 @@
         "./src/view/schedule",
         "./src/model",
         "./src/view/movie",
-        "./src/view/reviews"
-
+        "./src/view/reviews",
+        "./src/view/modal"
     ],
     "exposed-modules": [],
     "dependencies": {

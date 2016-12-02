@@ -17,6 +17,7 @@ subscriptions state =
     Sub.batch [ reviews StoreReviews, movies StoreMovies ]
 
 
+main : Program State State Msg
 main =
     Html.programWithFlags
         { init = init

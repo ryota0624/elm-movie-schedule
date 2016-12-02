@@ -8,3 +8,6 @@ port reviews : (List Review -> msg) -> Sub msg
 
 
 port movies : (List Movie -> msg) -> Sub msg
+
+
+port onClickMovieTitle : Movie -> Cmd movie
