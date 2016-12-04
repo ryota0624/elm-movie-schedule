@@ -29,6 +29,6 @@ getSchedule : Cmd Msg
 getSchedule =
     let
         url =
-            "/schedule.json"
+            "/schedule"
     in
         Http.send UpdateSchedule (Http.get url decodeSchedule)

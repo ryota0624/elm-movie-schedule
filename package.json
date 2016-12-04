@@ -1,0 +1,28 @@
+{
+  "name": "router",
+  "version": "1.0.0",
+  "description": "- [tutolial](https://www.elm-tutorial.org/jp/) - elm-package install - elm-reactor - elm-make App.elm",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prod-build": "webpack --config webpack.config.prod.js",
+    "dev-build": "webpack-dev-server --port 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryota0624/elm-movie-schedule.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryota0624/elm-movie-schedule/issues"
+  },
+  "homepage": "https://github.com/ryota0624/elm-movie-schedule#readme",
+  "dependencies": {
+    "elm": "^0.18.0",
+    "elm-webpack-loader": "^3.1.0",
+    "node-notifier": "^4.6.1",
+    "webpack": "^1.13.3",
+    "webpack-dev-server": "^1.16.2"
+  }
+}

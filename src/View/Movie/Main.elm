@@ -11,6 +11,6 @@ view movie =
     div []
         [ text movie.title
         , movie.base
-            |> Maybe.map (\base -> img [ src <| "http://www.aeoncinema.com" ++ base.thumbnaiUrl ] [])
+            |> Maybe.map (\{ thumbnaiUrl } -> img [ src <| "http://www.aeoncinema.com" ++ thumbnaiUrl ] [])
             |> Maybe.withDefault (div [] [])
         ]

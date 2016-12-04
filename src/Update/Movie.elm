@@ -1,6 +1,6 @@
 module Update.Movie exposing (..)
 
-import Model.Movie as MovieModel exposing (Movie, ID, decodeMovie, MovieList, updateBase)
+import Model.Movie as MovieModel exposing (Movie, MovieList)
 import Http
 import Model.Schedule exposing (MovieValueObject)
 
@@ -21,14 +21,10 @@ update msg model =
                     model ! []
 
 
-getMovie : ID -> Maybe MovieValueObject -> Cmd Msg
+getMovie : MovieModel.ID -> Maybe MovieValueObject -> Cmd Msg
 getMovie id movieVo =
     let
         url =
-            "/movie/" ++ id ++ ".json"
+            "/movie/" ++ id
     in
-        Http.send (Result.map (updateBase movieVo) >> StoreMovie) (Http.get url decodeMovie)
-
-
-
--- (\movie -> StoreMovie { movie | base = movieVo })
+        Http.send (Result.map (MovieModel.updateBase movieVo) >> StoreMovie) (Http.get url MovieModel.decodeMovie)
