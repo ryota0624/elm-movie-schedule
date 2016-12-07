@@ -31,7 +31,7 @@ module.exports = {
       {
         test: /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader: 'elm-webpack'
+        loader: 'elm-webpack-loader'
       },
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
       { test: /\.ts(x)?$/, loader: 'ts-loader' },

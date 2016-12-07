@@ -1,4 +1,4 @@
-module Update.Schedule exposing (Msg(..), update, getSchedule)
+module Update.Schedule exposing (Msg(..), update, getSchedule, Model)
 
 import Model.Schedule exposing (ScheduleModel, Schedule, decodeModelDTO, decodeSchedule, MovieValueObject)
 import Http
@@ -10,7 +10,11 @@ type Msg
     | MovieDetail MovieValueObject
 
 
-update : Msg -> ScheduleModel -> ( ScheduleModel, Cmd Msg )
+type alias Model =
+    Maybe Schedule
+
+
+update : Msg -> Model -> ( ScheduleModel, Cmd Msg )
 update msg model =
     case msg of
         UpdateSchedule result ->

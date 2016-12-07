@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prod-build": "webpack --config webpack.config.prod.js",
-    "dev-build": "webpack-dev-server --port 3000"
+    "dev-build": "webpack-dev-server --port 3000",
+    "webpack-v": "webpack --v"
   },
   "repository": {
     "type": "git",

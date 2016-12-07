@@ -1,7 +1,7 @@
-module Model.Movie exposing (Movie, ID, decodeMovie, MovieList, update, updateBase)
+module Model.Movie exposing (Movie, ID, decodeMovie, updateBase)
 
+import Model.Review exposing (Review)
 import Json.Decode as Decode
-import Dict
 import Model.Schedule exposing (MovieValueObject)
 
 
@@ -27,21 +27,13 @@ type alias Movie =
     , story : Story
     , pageUrl : PageUrl
     , base : Maybe MovieValueObject
+    , review : Maybe Review
     }
 
 
 updateBase : Maybe MovieValueObject -> Movie -> Movie
 updateBase movieVo movie =
     { movie | base = movieVo }
-
-
-type alias MovieList =
-    Dict.Dict String Movie
-
-
-update : Movie -> MovieList -> MovieList
-update movie list =
-    Dict.insert movie.id movie list
 
 
 decodeMovie : Decode.Decoder Movie
@@ -52,4 +44,4 @@ decodeMovie =
         (Decode.field "story" Decode.string)
         (Decode.field "page_url" Decode.string)
     )
-        |> Decode.map (\fn -> fn Nothing)
+        |> Decode.map (\fn -> fn Nothing Nothing)

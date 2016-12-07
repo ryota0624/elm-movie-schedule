@@ -2,12 +2,12 @@ module App exposing (..)
 
 import Dict
 import Navigation exposing (Location)
-import Model.Main exposing (Model)
 import Routing.Main exposing (Route(ScheduleRoute, MovieRoute), parseLocation)
 import Update.Movie exposing (getMovie)
 import Update.Schedule exposing (getSchedule)
-import Update.Main exposing (Msg(ScheduleMsg, OnLocationChange, MovieMsg), update)
+import Update.Main exposing (Msg(ScheduleMsg, OnLocationChange, MovieMsg), update, Model)
 import View.Main exposing (view)
+import View.Movie.MovieReviewComponent as MovieReviewComponent
 
 
 initialModel : Route -> Model
@@ -15,6 +15,7 @@ initialModel route =
     { schedule = Maybe.Nothing
     , route = route
     , movieList = Dict.empty
+    , movieReviewComponent = MovieReviewComponent.init
     }
 
 
