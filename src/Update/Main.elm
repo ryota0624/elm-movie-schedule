@@ -8,6 +8,9 @@ import Routing.Main exposing (parseLocation, Route(MovieRoute))
 import Navigation
 import View.Movie.MovieReviewComponent as MovieReviewComponent
 import Dict
+import Monocle.Optional exposing (Optional, composeLens, compose)
+import Monocle.Common exposing ((=>))
+import Model.Schedule exposing (Schedule, MovieValueObject, movieOfSchedule)
 
 
 type alias Model =
@@ -16,6 +19,28 @@ type alias Model =
     , movieList : MovieUpdate.Model
     , movieReviewComponent : MovieReviewComponent.Model
     }
+
+
+getSch : Model -> ScheduleUpdate.Model
+getSch model =
+    model.schedule
+
+
+setSch : ScheduleUpdate.Model -> Model -> Model
+setSch sh model =
+    { model | schedule = sh }
+
+
+scheduleOfModel : Optional Model Schedule
+scheduleOfModel =
+    let
+        getOptional model =
+            model.schedule
+
+        set schedule model =
+            { model | schedule = Just schedule }
+    in
+        Optional getOptional set
 
 
 type Msg
@@ -86,17 +111,10 @@ onChangeLocation model location =
             case newRoute of
                 MovieRoute id ->
                     let
-                        scheduleMovie =
-                            model.schedule
-                                |> Maybe.map
-                                    (\{ movies } ->
-                                        movies
-                                            |> List.filter (\m -> m.id == id)
-                                            |> List.head
-                                    )
-                                |> Maybe.withDefault Nothing
+                        movie =
+                            model |> (scheduleOfModel => movieOfSchedule id).getOption
                     in
-                        Cmd.map MovieMsg (getMovie id scheduleMovie)
+                        Cmd.map MovieMsg (getMovie id movie)
 
                 _ ->
                     Cmd.none

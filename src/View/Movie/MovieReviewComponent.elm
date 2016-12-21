@@ -27,7 +27,7 @@ update msg model =
         EditPoint point ->
             { model | editingReview = Review point model.editingReview.describe } ! []
 
-        SubmitReview id review ->
+        _ ->
             model ! []
 
 

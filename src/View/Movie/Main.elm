@@ -8,9 +8,6 @@ import Update.Movie as Update exposing (Msg(ReviewMovie, None))
 import Model.Review as Review
 
 
--- import Update.Movie as MovieUpdate
-
-
 view : Movie -> Html.Html Update.Msg
 view movie =
     div []

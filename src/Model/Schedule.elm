@@ -1,6 +1,8 @@
 module Model.Schedule exposing (..)
 
 import Json.Decode as Decode
+import Monocle.Optional exposing (Optional)
+import Monocle.Lens exposing (Lens)
 
 
 type alias Schedule =
@@ -9,8 +11,30 @@ type alias Schedule =
     }
 
 
-type alias ScheduleModel =
-    Maybe Schedule
+moviesOfSchedule : Lens Schedule (List MovieValueObject)
+moviesOfSchedule =
+    let
+        get schedule =
+            schedule.movies
+
+        set movies schedule =
+            { schedule | movies = movies }
+    in
+        Lens get set
+
+
+movieOfSchedule : MovieValueObjectID -> Optional Schedule MovieValueObject
+movieOfSchedule id =
+    let
+        getOptional : Schedule -> Maybe MovieValueObject
+        getOptional schedule =
+            schedule.movies |> List.filter (\m -> m.id == id) |> List.head
+
+        set : MovieValueObject -> Schedule -> Schedule
+        set movie schedule =
+            { schedule | movies = schedule.movies ++ [ movie ] }
+    in
+        Optional getOptional set
 
 
 type alias MovieValueObjectID =
