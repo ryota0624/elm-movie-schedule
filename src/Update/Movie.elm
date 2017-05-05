@@ -12,6 +12,7 @@ import Monocle.Common exposing ((=>))
 type Msg
     = StoreMovie (Result Http.Error Movie)
     | ReviewMovie MovieModel.ID Review
+    | SendMovie Movie
     | None
 
 
@@ -26,6 +27,10 @@ type alias Movies =
 type alias Model =
     Movies
 
+type alias Callbacks a = {
+  onClickTitle : (Movie -> a),
+  sendReview : (MovieModel.ID -> Review -> a)
+}
 
 movieOfMovies : ID -> Optional Model Movie
 movieOfMovies id =
@@ -38,23 +43,26 @@ movieOfMovies id =
     in
         Optional getOption set
 
+(==>): a -> b -> (a, b)
+(==>) = (,)
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update : Callbacks a -> Msg -> Model -> ( Model, Maybe a)
+update fn msg model =
     case msg of
         None ->
-            model ! []
+            model ==> Nothing
 
         StoreMovie result ->
             case result of
                 Ok movie ->
-                    (movieOfMovies movie.id).set movie model ! []
+                    ((movieOfMovies movie.id).set movie model ==> Nothing)
 
                 Err err ->
-                    model ! []
-
+                    model ==> Nothing
+        SendMovie movie ->
+          model ==> Just (fn.onClickTitle movie)
         ReviewMovie id review ->
-            ((movieOfMovies id) => reviewOfMovie).set review model ! []
+            (((movieOfMovies id) => reviewOfMovie).set review model) ==> Just (fn.sendReview id review)
 
 
 getMovie : MovieModel.ID -> Maybe MovieValueObject -> Cmd Msg

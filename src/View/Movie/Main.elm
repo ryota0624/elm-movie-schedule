@@ -4,14 +4,14 @@ import Model.Movie exposing (Movie)
 import Html exposing (div, img, text, hr, span)
 import Html.Attributes exposing (src)
 import Html.Events exposing (onClick)
-import Update.Movie as Update exposing (Msg(ReviewMovie, None))
+import Update.Movie as Update exposing (Msg(ReviewMovie, None, SendMovie))
 import Model.Review as Review
 
 
 view : Movie -> Html.Html Update.Msg
 view movie =
     div []
-        [ text movie.title
+        [ div [onClick (SendMovie movie)] [text movie.title]
         , movie.base
             |> Maybe.map (\{ thumbnaiUrl } -> img [ src <| "http://www.aeoncinema.com" ++ thumbnaiUrl ] [])
             |> Maybe.withDefault (div [] [])

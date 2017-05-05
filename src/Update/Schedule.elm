@@ -3,6 +3,7 @@ module Update.Schedule exposing (Msg(..), update, getSchedule, Model)
 import Model.Schedule exposing (Schedule, Schedule, decodeModelDTO, decodeSchedule, MovieValueObject)
 import Http
 import Navigation
+import MasterPorts exposing (sendPort)
 
 
 type Msg
@@ -26,7 +27,7 @@ update msg model =
                     model ! []
 
         MovieDetail movie ->
-            model ! [ Navigation.newUrl <| "#movies/" ++ movie.id ]
+            model ! [ Navigation.newUrl <| "#movies/" ++ movie.id, sendPort ( "type", movie.title ) ]
 
 
 getSchedule : Cmd Msg

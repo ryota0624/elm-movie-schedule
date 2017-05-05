@@ -11,7 +11,7 @@ import Dict
 import Monocle.Optional exposing (Optional, composeLens, compose)
 import Monocle.Common exposing ((=>))
 import Model.Schedule exposing (Schedule, MovieValueObject, movieOfSchedule)
-
+import Model.Movie exposing (Movie)
 
 type alias Model =
     { schedule : ScheduleUpdate.Model
@@ -49,13 +49,26 @@ type Msg
     | OnLocationChange Location
     | MovieMsg MovieUpdate.Msg
     | MovieReview MovieReviewComponent.Msg
+    | ReceveStr String
+    | ReceiveMovie Movie
 
+
+movieUpdate = MovieUpdate.update {
+  onClickTitle = ReceiveMovie,
+  sendReview = (\_ _ -> Debug.log "sendReview" No)
+  }
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         No ->
             model ! []
+
+        ReceiveMovie movie ->
+          let
+            f = Debug.log "log" movie
+          in
+          model ! []
 
         MovieReview subMsg ->
             let
@@ -88,10 +101,14 @@ update msg model =
 
         MovieMsg movieMsg ->
             let
-                ( movieList, cmd ) =
-                    MovieUpdate.update movieMsg model.movieList
+                ( nextModel, callbackResult ) =
+                     movieUpdate movieMsg model.movieList
+                     |> Tuple.mapFirst (\movieList -> { model | movieList = movieList})
+
             in
-                { model | movieList = movieList } ! [ Cmd.map MovieMsg cmd ]
+                case callbackResult of
+                  Just callbackMsg -> update callbackMsg nextModel
+                  Nothing -> nextModel ! []
 
         ScheduleMsg scheduleMsg ->
             let
@@ -99,6 +116,13 @@ update msg model =
                     ScheduleUpdate.update scheduleMsg model.schedule
             in
                 { model | schedule = schedule } ! [ Cmd.map ScheduleMsg cmd ]
+
+        ReceveStr str ->
+            let
+                a =
+                    Debug.log "Receive" str
+            in
+                ( model, Cmd.none )
 
 
 onChangeLocation : Model -> Location -> ( Model, Cmd Msg )
